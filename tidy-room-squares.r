@@ -48,3 +48,56 @@ XX %>%
   theme(
     legend.position  = "none",
   )
+
+horiz_lines <- function(n_rows, n_cols) {
+  tibble(
+       x = rep(0, n_rows + 1)  + .5,
+       y = 0:n_rows + .5,
+    xend = rep(n_cols, n_rows + 1) + .5,
+    yend = 0:n_rows + .5
+  )
+}
+
+vertical_lines <- function(n_rows, n_cols) {
+  tibble(
+       x = 0:n_cols + .5,
+       y = rep(0, n_cols + 1) + .5,
+    xend = 0:n_cols + .5,
+    yend = rep(n_rows, n_cols + 1) + .5
+  )
+}
+
+grid_lines <- function(n_rows, n_cols) {
+  bind_rows(
+    horiz_lines(n_rows, n_cols),
+    vertical_lines(n_rows, n_cols)
+  )
+}
+
+ggplot(data = XX, aes(col, row)) +
+  geom_tile(aes(fill = pmin(first, second))) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 4) +
+  geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend)) +
+  scale_y_reverse() +
+  scale_fill_gradient(low = "#cbdbbc", high = "#234702", na.value = "grey") +
+  coord_fixed() +
+  theme_void() +
+  theme(
+    legend.position  = "none",
+  )
+
+ggsave("min.png")
+
+ggplot(data = XX, aes(col, row)) +
+  geom_tile(aes(fill = pmax(first, second))) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 4) +
+  geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend)) +
+  scale_y_reverse() +
+  scale_fill_gradient(low = "#cbdbbc", high = "#234702", na.value = "grey") +
+  coord_fixed() +
+  theme_void() +
+  theme(
+    legend.position  = "none",
+  )
+
+ggsave("max.png")
