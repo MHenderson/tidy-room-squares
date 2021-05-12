@@ -76,22 +76,22 @@ grid_lines <- function(n_rows, n_cols) {
 
 ggplot(data = XX, aes(col, row)) +
   geom_tile(aes(fill = pmin(first, second))) +
-  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 4) +
-  geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 1) +
+  geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend), size = .1) +
   scale_y_reverse() +
   scale_fill_gradient(low = "#cbdbbc", high = "#234702", na.value = "grey") +
   coord_fixed() +
   theme_void() +
   theme(
-    legend.position  = "none",
+    legend.position  = "none"
   )
 
-ggsave("min.png")
+ggsave("min.png", width = 1, height = 1)
 
 ggplot(data = XX, aes(col, row)) +
   geom_tile(aes(fill = pmax(first, second))) +
-  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 4) +
-  geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 1) +
+  geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend), size = .1) +
   scale_y_reverse() +
   scale_fill_gradient(low = "#cbdbbc", high = "#234702", na.value = "grey") +
   coord_fixed() +
@@ -100,4 +100,4 @@ ggplot(data = XX, aes(col, row)) +
     legend.position  = "none",
   )
 
-ggsave("max.png")
+ggsave("max.png", width = 1, height = 1)
