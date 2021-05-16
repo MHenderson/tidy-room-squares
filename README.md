@@ -1,5 +1,5 @@
 ## Tidy Room Squares
 
-![](min.png)
+![](min.svg)
 
-![](max.png)
+![](max.svg)
