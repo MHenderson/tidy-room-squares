@@ -1,5 +1,5 @@
 ## Tidy Room Squares
 
-![](min.svg)
+![A Room square coloured by minimum value.](min.png)
 
-![](max.svg)
+![A Room square coloured by maximum value.](max.png)
