@@ -48,7 +48,7 @@ na_colour <- "grey"
 
 ggplot(data = XX, aes(col, row)) +
   geom_tile(aes(fill = pmin(first, second))) +
-  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = text_colour, size = 3) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = text_colour, size = 1) +
   geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend), size = .1) +
   scale_y_reverse() +
   scale_fill_gradient(low = low_colour, high = high_colour, na.value = na_colour) +
@@ -58,11 +58,11 @@ ggplot(data = XX, aes(col, row)) +
     legend.position  = "none"
   )
 
-ggsave("min.svg", width = 3, height = 3)
+ggsave("min.png", width = 1, height = 1)
 
 ggplot(data = XX, aes(col, row)) +
   geom_tile(aes(fill = pmax(first, second))) +
-  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = text_colour, size = 3) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = text_colour, size = 1) +
   geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend), size = .1) +
   scale_y_reverse() +
   scale_fill_gradient(low = low_colour, high = high_colour, na.value = na_colour) +
@@ -72,4 +72,4 @@ ggplot(data = XX, aes(col, row)) +
     legend.position  = "none",
   )
 
-ggsave("max.svg", width = 3, height = 3)
+ggsave("max.png", width = 1, height = 1)
