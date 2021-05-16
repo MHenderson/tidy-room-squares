@@ -1,6 +1,9 @@
 library(dplyr)
 library(ggplot2)
+library(munsell)
 library(tibble)
+
+source("grid_functions.r")
 
 X <- tribble(
   ~row, ~col, ~first, ~second,
@@ -38,66 +41,35 @@ Y <- expand.grid(row = 1:7, col = 1:7)
 
 XX <- left_join(Y, X)
 
-XX %>%
-  ggplot(aes(col, row, label = paste0("{", first, ",", second, "}"))) +
-  geom_tile(aes(fill = first + second)) +
-  geom_text(data = XX %>% filter(!is.na(first)), color = "white", size = 5) +
-  scale_y_reverse() +
-  coord_fixed() +
-  theme_void() +
-  theme(
-    legend.position  = "none",
-  )
-
-horiz_lines <- function(n_rows, n_cols) {
-  tibble(
-       x = rep(0, n_rows + 1)  + .5,
-       y = 0:n_rows + .5,
-    xend = rep(n_cols, n_rows + 1) + .5,
-    yend = 0:n_rows + .5
-  )
-}
-
-vertical_lines <- function(n_rows, n_cols) {
-  tibble(
-       x = 0:n_cols + .5,
-       y = rep(0, n_cols + 1) + .5,
-    xend = 0:n_cols + .5,
-    yend = rep(n_rows, n_cols + 1) + .5
-  )
-}
-
-grid_lines <- function(n_rows, n_cols) {
-  bind_rows(
-    horiz_lines(n_rows, n_cols),
-    vertical_lines(n_rows, n_cols)
-  )
-}
+text_colour <-"#ffffff"
+low_colour <- mnsl("5P 2/12")
+high_colour <- mnsl("5P 7/12")
+na_colour <- "grey"
 
 ggplot(data = XX, aes(col, row)) +
   geom_tile(aes(fill = pmin(first, second))) +
-  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 1) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = text_colour, size = 3) +
   geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend), size = .1) +
   scale_y_reverse() +
-  scale_fill_gradient(low = "#cbdbbc", high = "#234702", na.value = "grey") +
-  coord_fixed() +
+  scale_fill_gradient(low = low_colour, high = high_colour, na.value = na_colour) +
+  coord_fixed() + 
   theme_void() +
   theme(
     legend.position  = "none"
   )
 
-ggsave("min.png", width = 1, height = 1)
+ggsave("min.svg", width = 3, height = 3)
 
 ggplot(data = XX, aes(col, row)) +
   geom_tile(aes(fill = pmax(first, second))) +
-  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = "black", size = 1) +
+  geom_text(aes(label = paste0("{", first, "," ,second, "}")), data = XX %>% filter(!is.na(first)), color = text_colour, size = 3) +
   geom_segment(data = grid_lines(7, 7), aes(x = x, y = y, xend = xend, yend = yend), size = .1) +
   scale_y_reverse() +
-  scale_fill_gradient(low = "#cbdbbc", high = "#234702", na.value = "grey") +
+  scale_fill_gradient(low = low_colour, high = high_colour, na.value = na_colour) +
   coord_fixed() +
   theme_void() +
   theme(
     legend.position  = "none",
   )
 
-ggsave("max.png", width = 1, height = 1)
+ggsave("max.svg", width = 3, height = 3)
