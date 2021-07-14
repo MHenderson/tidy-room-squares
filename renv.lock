@@ -13,7 +13,7 @@
       "Package": "MASS",
       "Version": "7.3-53.1",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "4ef21dd0348b9abb7f8bd1d77e4cd0c3"
     },
     "Matrix": {
@@ -160,7 +160,7 @@
       "Package": "mgcv",
       "Version": "1.8-34",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "bd4a6c4b600f58651d60d381b0e9a397"
     },
     "munsell": {
